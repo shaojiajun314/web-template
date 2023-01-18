@@ -1,6 +1,6 @@
 cd /backend
 chmod +x requirement.txt
-pip3 install -r requirement.txt
+pip3 install -r requirement.txt -i $PIP_SOURCE
 python3 manage.py makemigrations
 python3 manage.py migrate
 
