@@ -1,0 +1,59 @@
+version: "2"
+
+services:
+  mysql:
+    container_name: mysql
+    restart: always
+    tty: true
+    image: mysql/mysql-server
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/logs:/logs
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d/
+    command: ['mysqld']
+    env_file:
+      - ./mysql/env.env
+
+  nginx:
+    container_name: nginx
+    restart: always
+    tty: true
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - ./nginx/env.env
+    volumes:
+      - ./nginx/http.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/https.conf:/etc/nginx/conf.d/https.conf
+      - ./nginx/ssl_crt:/ssl_crt
+      - ./nginx/static:/static
+
+  backend:
+    depends_on:
+      - mysql
+    image: python:3.9.6
+    container_name: backend
+    tty: true
+    env_file:
+      - ./backend/env.env
+    command: [ "/bin/bash", "-c", "chmod +x /backend/entry.sh; /backend/entry.sh;" ]
+    volumes:
+      - ./backend:/backend
+
+  front:
+    image: node:19.4.0
+    container_name: front
+    env_file:
+      - ./front/env.env
+    command: [ "/bin/bash", "-c", "chmod +x /front/entry.sh; /front/entry.sh;" ]
+    volumes:
+      - ./front:/front
+      - ./nginx/static:/front/dist
+
+
+
+  
