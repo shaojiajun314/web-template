@@ -49,6 +49,12 @@ class AbstractModels(models.Model):
     all_objects = models.Manager()
 
 
+class AbstractHardDeleteModels(models.Model):
+    date_created = models.DateTimeField(default=timezone.now)
+    date_updated = models.DateTimeField(auto_now=True)
+    class Meta:
+        abstract = True
+        
 
 class AbstractStatusModel():
     def __init__(self, status_transfer_map, status_attr, init_status,

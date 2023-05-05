@@ -5,7 +5,7 @@ services:
     container_name: mysql
     restart: always
     tty: true
-    image: mysql/mysql-server
+    image: mysql/mysql-server:8.0.31
     ports:
       - "3306:3306"
     volumes:
