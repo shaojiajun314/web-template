@@ -138,6 +138,13 @@ JWT_AUTH = {
     'JWT_AUTH_COOKIE': 'JWT'
 }
 
+
+if DEBUG:
+    SWAGGER_SETTINGS = {
+        'DEFAULT_AUTO_SCHEMA_CLASS': 'libs.swagger.schema.AutoSchema',
+    }
+    
+
 APP_MIGRATIONS_PATH = 'migrations'
 MIGRATION_MODULES = {}
 
