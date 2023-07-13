@@ -39,10 +39,10 @@ services:
     container_name: backend
     tty: true
     env_file:
-      - ./backend/env.env
+      - ./django/env.env
     command: [ "/bin/bash", "-c", "chmod +x /backend/entry.sh; /backend/entry.sh;" ]
     volumes:
-      - ./backend:/backend
+      - ./django:/backend
 
   front:
     image: node:19.4.0

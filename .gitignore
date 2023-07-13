@@ -9,3 +9,6 @@ mysql/logs
 
 front/node_modules
 front/dist
+
+gin/var
+gin/python/var

@@ -1,0 +1,270 @@
+definitions:
+  models.OverIssuePredictEnum:
+    enum:
+    - 1
+    - 2
+    - 3
+    type: integer
+    x-enum-varnames:
+    - Heavy
+    - Medium
+    - Light
+  models.Project:
+    properties:
+      addtionalInfo:
+        type: string
+      contractAddress:
+        type: string
+      createdAt:
+        type: string
+      discord:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      officialSite:
+        type: string
+      overIssuePredict:
+        $ref: '#/definitions/models.OverIssuePredictEnum'
+      publicMintPrice:
+        type: integer
+      publicMintTime:
+        type: string
+      publicSupply:
+        type: integer
+      tag:
+        description: todo
+        type: string
+      twitter:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        description: User address todo
+        type: string
+      whitelist:
+        type: string
+      whitelistMintTime:
+        type: string
+      whitelistSupply:
+        type: integer
+      wlmintPrice:
+        type: integer
+    type: object
+  project.ProjectDetailSerializer:
+    properties:
+      addtionalInfo:
+        type: string
+      contractAddress:
+        type: string
+      createdAt:
+        type: string
+      discord:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      officialSite:
+        type: string
+      onboard_address:
+        items:
+          type: string
+        type: array
+      overIssuePredict:
+        $ref: '#/definitions/models.OverIssuePredictEnum'
+      publicMintPrice:
+        type: integer
+      publicMintTime:
+        type: string
+      publicSupply:
+        type: integer
+      tag:
+        description: todo
+        type: string
+      twitter:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        description: User address todo
+        type: string
+      whitelist:
+        type: string
+      whitelistMintTime:
+        type: string
+      whitelistSupply:
+        type: integer
+      wlmintPrice:
+        type: integer
+    type: object
+  project.ProjectSerializers:
+    properties:
+      addtional_info:
+        type: string
+      contract_address:
+        type: string
+      discord:
+        type: string
+      name:
+        description: User todo
+        type: string
+      official_site:
+        type: string
+      over_issue_predict:
+        $ref: '#/definitions/models.OverIssuePredictEnum'
+      public_mint_price:
+        type: integer
+      public_mint_time:
+        type: string
+      public_supply:
+        type: integer
+      tag:
+        type: string
+      twitter:
+        type: string
+      whitelist:
+        type: string
+      whitelist_mint_price:
+        type: integer
+      whitelist_mint_time:
+        type: string
+      whitelist_supply:
+        type: integer
+    required:
+    - contract_address
+    - discord
+    - name
+    - official_site
+    - over_issue_predict
+    - public_mint_price
+    - public_mint_time
+    - public_supply
+    - tag
+    - twitter
+    - whitelist
+    - whitelist_mint_price
+    - whitelist_mint_time
+    - whitelist_supply
+    type: object
+  response.Ret:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg: {}
+    type: object
+  user.UserForm:
+    properties:
+      address:
+        type: string
+      address_list:
+        type: string
+      sign:
+        type: string
+      time_stamp:
+        type: integer
+    required:
+    - address
+    - address_list
+    - sign
+    - time_stamp
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/project:
+    get:
+      consumes:
+      - application/json
+      description: project list
+      parameters:
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: success
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Ret'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Project'
+              type: object
+      summary: project list
+      tags:
+      - project
+    post:
+      consumes:
+      - application/json
+      description: project create
+      parameters:
+      - description: project create form
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/project.ProjectSerializers'
+      responses:
+        "200":
+          description: success
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Ret'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Project'
+              type: object
+      summary: project create
+      tags:
+      - project
+  /api/v1/project/{id}:
+    get:
+      consumes:
+      - application/json
+      description: project detail
+      parameters:
+      - description: project id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: success
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Ret'
+            - properties:
+                data:
+                  $ref: '#/definitions/project.ProjectDetailSerializer'
+              type: object
+      summary: project detail
+      tags:
+      - project
+  /api/v1/user/login:
+    post:
+      consumes:
+      - application/json
+      description: customer login
+      parameters:
+      - description: login form
+        in: body
+        name: UserForm
+        required: true
+        schema:
+          $ref: '#/definitions/user.UserForm'
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/response.Ret'
+      summary: customer login
+      tags:
+      - user
+swagger: "2.0"

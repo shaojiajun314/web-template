@@ -1,0 +1,414 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/project": {
+            "get": {
+                "description": "project list",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "project list",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Ret"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Project"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "project create",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "project create",
+                "parameters": [
+                    {
+                        "description": "project create form",
+                        "name": "form",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project.ProjectSerializers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Ret"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Project"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{id}": {
+            "get": {
+                "description": "project detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "project detail",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "project id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Ret"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/project.ProjectDetailSerializer"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/login": {
+            "post": {
+                "description": "customer login",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "customer login",
+                "parameters": [
+                    {
+                        "description": "login form",
+                        "name": "UserForm",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.UserForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/response.Ret"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.OverIssuePredictEnum": {
+            "type": "integer",
+            "enum": [
+                1,
+                2,
+                3
+            ],
+            "x-enum-varnames": [
+                "Heavy",
+                "Medium",
+                "Light"
+            ]
+        },
+        "models.Project": {
+            "type": "object",
+            "properties": {
+                "addtionalInfo": {
+                    "type": "string"
+                },
+                "contractAddress": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "discord": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "officialSite": {
+                    "type": "string"
+                },
+                "overIssuePredict": {
+                    "$ref": "#/definitions/models.OverIssuePredictEnum"
+                },
+                "publicMintPrice": {
+                    "type": "integer"
+                },
+                "publicMintTime": {
+                    "type": "string"
+                },
+                "publicSupply": {
+                    "type": "integer"
+                },
+                "tag": {
+                    "description": "todo",
+                    "type": "string"
+                },
+                "twitter": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "user": {
+                    "description": "User address todo",
+                    "type": "string"
+                },
+                "whitelist": {
+                    "type": "string"
+                },
+                "whitelistMintTime": {
+                    "type": "string"
+                },
+                "whitelistSupply": {
+                    "type": "integer"
+                },
+                "wlmintPrice": {
+                    "type": "integer"
+                }
+            }
+        },
+        "project.ProjectDetailSerializer": {
+            "type": "object",
+            "properties": {
+                "addtionalInfo": {
+                    "type": "string"
+                },
+                "contractAddress": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "discord": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "officialSite": {
+                    "type": "string"
+                },
+                "onboard_address": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "overIssuePredict": {
+                    "$ref": "#/definitions/models.OverIssuePredictEnum"
+                },
+                "publicMintPrice": {
+                    "type": "integer"
+                },
+                "publicMintTime": {
+                    "type": "string"
+                },
+                "publicSupply": {
+                    "type": "integer"
+                },
+                "tag": {
+                    "description": "todo",
+                    "type": "string"
+                },
+                "twitter": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "user": {
+                    "description": "User address todo",
+                    "type": "string"
+                },
+                "whitelist": {
+                    "type": "string"
+                },
+                "whitelistMintTime": {
+                    "type": "string"
+                },
+                "whitelistSupply": {
+                    "type": "integer"
+                },
+                "wlmintPrice": {
+                    "type": "integer"
+                }
+            }
+        },
+        "project.ProjectSerializers": {
+            "type": "object",
+            "required": [
+                "contract_address",
+                "discord",
+                "name",
+                "official_site",
+                "over_issue_predict",
+                "public_mint_price",
+                "public_mint_time",
+                "public_supply",
+                "tag",
+                "twitter",
+                "whitelist",
+                "whitelist_mint_price",
+                "whitelist_mint_time",
+                "whitelist_supply"
+            ],
+            "properties": {
+                "addtional_info": {
+                    "type": "string"
+                },
+                "contract_address": {
+                    "type": "string"
+                },
+                "discord": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "User todo",
+                    "type": "string"
+                },
+                "official_site": {
+                    "type": "string"
+                },
+                "over_issue_predict": {
+                    "$ref": "#/definitions/models.OverIssuePredictEnum"
+                },
+                "public_mint_price": {
+                    "type": "integer"
+                },
+                "public_mint_time": {
+                    "type": "string"
+                },
+                "public_supply": {
+                    "type": "integer"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "twitter": {
+                    "type": "string"
+                },
+                "whitelist": {
+                    "type": "string"
+                },
+                "whitelist_mint_price": {
+                    "type": "integer"
+                },
+                "whitelist_mint_time": {
+                    "type": "string"
+                },
+                "whitelist_supply": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.Ret": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {}
+            }
+        },
+        "user.UserForm": {
+            "type": "object",
+            "required": [
+                "address",
+                "address_list",
+                "sign",
+                "time_stamp"
+            ],
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "address_list": {
+                    "type": "string"
+                },
+                "sign": {
+                    "type": "string"
+                },
+                "time_stamp": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
