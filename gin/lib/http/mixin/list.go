@@ -5,6 +5,10 @@ import (
   "reflect"
 )
 
+type JsonMarsher interface {
+  MarshalJSON() interface{}
+}
+
 func snakeString(s string) string {
   data := make([]byte, 0, len(s)*2)
   j := false
@@ -33,7 +37,16 @@ func r(key string, ts reflect.Type, vs reflect.Value, rawData interface{}, m *(m
         if jsonTag != "" && jsonTag != "-" {
           key = jsonTag
         }
-        (*m)[key] = vs.Field(t).Interface()
+
+        // todo
+        valueInterface := vs.Field(t).Interface()
+        marshaler, ok := valueInterface.(JsonMarsher)
+        if ok {
+          (*m)[key] = marshaler.MarshalJSON()
+        } else {
+          (*m)[key] = valueInterface
+        }
+
         break
       } else if (n == "Model") {
         in := vs.Field(t).Interface()
